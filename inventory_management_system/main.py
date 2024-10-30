@@ -30,7 +30,18 @@ class Product:
 
 
 class InventoryManagementSystem:
+   
     def __init__(self):
-        self.user = []
+        self.users = []
         self.product = {}
         self.current_user = None
+
+    def add_user(self,username,password,role):
+        user = User(username,password,role)
+        self.users.append(user)
+
+    def login(self):
+        username = input("Enter username:")
+        password = input("Enter password:")
+        
+
