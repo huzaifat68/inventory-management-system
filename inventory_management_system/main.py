@@ -48,5 +48,15 @@ class InventoryManagementSystem:
     def login(self):
         username = input("Enter username:")
         password = input("Enter password:")
-
-
+        for user in self.users:
+            if user.username == username and user.password == password:
+                print(f"Welcome {user.username}! You are logged in as {user.role}")
+                self.current_user = user
+                return True
+            else:
+                print("You have enterd wrong username or password")
+                return False
+        
+    # Method for adding product
+    def add_product(self):
+        pass
