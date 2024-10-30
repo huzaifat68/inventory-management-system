@@ -118,3 +118,70 @@ class InventoryManagementSystem:
         else:
             print("Access denied. Users with the admin role can add product.")
 
+    # Method for sale
+    def sale(self):
+        try:
+            product_id = int(input("Enter Product ID to sell: "))
+            product = self.products.get(product_id)
+            if product:
+                quantity = int(input("Enter quantity to sell: "))
+                if quantity > 0 and quantity >= product.stock:
+                    product.stock_update(-quantity)
+                    print(f"Sale completed, {quantity} units of the {product.name} sold")
+                else:
+                    print(f"Error: Invalid Quanity, Current stock {product.stock}")
+            else:
+                print("Error: Product not found in record")
+        except ValueError:
+            print("Error: Please enter a valid Product ID and quantity.")
+
+
+if __name__ == "__main__":
+    ims = InventoryManagementSystem()
+    
+    ims.add_user("admin", "admin123", "Admin")
+    ims.add_user("user", "user123", "User")
+
+    print("Welcome to Console base Inventory Management System (IMS)")
+    while True:
+        if ims.login():
+            while True:
+                if ims.current_user.role == "Admin":
+                    print("1: Add Product\n2: Edit Product\n3: Delete Product\n4: View Inventory\n5: Adjust Stock\n6: Record a Sale\n7: Logout")
+                else:
+                    print("1: View Inventory\n2: Recod a Sale\n3: Logout")
+
+                choice = input("Choose an option: ")
+
+                if ims.current_user.role == "Admin":
+                    if choice == "1":
+                      ims.add_product()
+                    if choice == "2":
+                        ims.edit_product()
+                    if choice == "3":
+                        ims.delete_product()
+                    if choice == "4":
+                        ims.view_inventory()
+                    if choice == "5":
+                        ims.adjust_stock()
+                    if choice == "6":
+                        ims.sale()
+                    if choice == "7":
+                        print("Loggin out...")
+                        ims.current_user.role = None
+                        break
+                    else:
+                        print("Error: Invalid Choice. Try Again")
+                else:
+                    if choice == "1":
+                        ims.view_inventory()
+                    if choice == "2":
+                        ims.sale()
+                    if choice == "3":
+                        print("Loggin out...")
+                        ims.current_user.role = None
+                        break
+                    else:
+                        print("Error: Invalid Choice. Try Again")
+        else:
+            print("Login failed. Try again")
