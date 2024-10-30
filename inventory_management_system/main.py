@@ -101,3 +101,20 @@ class InventoryManagementSystem:
         print("Current Inventory:")
         for product in self.products.values():
             print(product.view_product())
+
+    # Method for adjusting stock
+    def adjust_stock(self):
+        if self.current_user.role == "Admin":
+            try:
+                product_id = int(input("Enter product ID to adjust stock: "))
+                product = self.products.get(product_id)
+                if product:
+                    quantity = int(input("Enter quantity to add adjust stock ( '+' to add and '-' to reduce): "))
+                    product.stock_update(quantity)
+                else:
+                    print("Product not found")
+            except ValueError:
+                print("Error: Please enter a valid Product ID and Quantity.")
+        else:
+            print("Access denied. Users with the admin role can add product.")
+
