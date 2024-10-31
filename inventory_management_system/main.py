@@ -46,28 +46,31 @@ class InventoryManagementSystem:
 
     # Method for login
     def login(self):
-        username = input("Enter username:")
-        password = input("Enter password:")
+        username = input("Enter username: ")
+        password = input("Enter password: ")
         for user in self.users:
             if user.username == username and user.password == password:
                 print(f"Welcome {user.username}! You are logged in as {user.role}.")
                 self.current_user = user
                 return True
-            else:
-                print("You have enterd wrong username or password.")
-                return False
+            
+        print("You have enterd wrong username or password.")
+        return False
         
     # Method for adding product
     def add_product(self):
         if self.current_user.role == "Admin":
-            product_id = int(input("Enter Product ID: "))
-            name = str(input("Enter Product Name: "))
-            catagory = str(input("Enter Product Category: "))
-            price = float(input("Enter Product Price: "))
-            stock_quantity = int(input("Enter Product Stock: "))
-            product = Product(product_id,name, catagory,price,stock_quantity)
-            self.products[product_id] = product
-            print(f"{name} product added in inventory.")
+            try:
+                product_id = int(input("Enter Product ID: "))
+                name = str(input("Enter Product Name: "))
+                catagory = str(input("Enter Product Category: "))
+                price = float(input("Enter Product Price: "))
+                stock_quantity = int(input("Enter Product Stock: "))
+                product = Product(product_id,name, catagory,price,stock_quantity)
+                self.products[product_id] = product
+                print(f"{name} product added in inventory.")
+            except ValueError:
+                print("Error: Invalid input, Please enter valid numbers for Product ID, Price and Stock")
         else:
             print("Access denied. Users with the admin role can add product.")
 
@@ -93,6 +96,8 @@ class InventoryManagementSystem:
             if product_id in self.products:
                 del self.products[product_id]
                 print(f"Product with the ID {product_id} has been deleted.")
+            else:
+                print("Error: Product not found.")
         else:
             print("Access denied. Users with the admin role can add product.")
  
@@ -125,7 +130,7 @@ class InventoryManagementSystem:
             product = self.products.get(product_id)
             if product:
                 quantity = int(input("Enter quantity to sell: "))
-                if quantity > 0 and quantity >= product.stock:
+                if quantity > 0 and quantity <= product.stock:
                     product.stock_update(-quantity)
                     print(f"Sale completed, {quantity} units of the {product.name} sold")
                 else:
@@ -141,45 +146,48 @@ if __name__ == "__main__":
     
     ims.add_user("admin", "admin123", "Admin")
     ims.add_user("user", "user123", "User")
-
+    
+    
+    
     print("Welcome to Console base Inventory Management System (IMS)")
     while True:
         if ims.login():
             while True:
                 if ims.current_user.role == "Admin":
-                    print("1: Add Product\n2: Edit Product\n3: Delete Product\n4: View Inventory\n5: Adjust Stock\n6: Record a Sale\n7: Logout")
+                    print("\n1: Add Product\n2: Edit Product\n3: Delete Product\n4: View Inventory\n5: Adjust Stock\n6: Record a Sale\n7: Logout")
                 else:
-                    print("1: View Inventory\n2: Recod a Sale\n3: Logout")
+                    print("\n1: View Inventory\n2: Recod a Sale\n3: Logout")
 
                 choice = input("Choose an option: ")
 
                 if ims.current_user.role == "Admin":
                     if choice == "1":
                       ims.add_product()
-                    if choice == "2":
+                    elif choice == "2":
                         ims.edit_product()
-                    if choice == "3":
+                    elif choice == "3":
                         ims.delete_product()
-                    if choice == "4":
+                    elif choice == "4":
                         ims.view_inventory()
-                    if choice == "5":
+                    elif choice == "5":
                         ims.adjust_stock()
-                    if choice == "6":
+                    elif choice == "6":
                         ims.sale()
-                    if choice == "7":
+                    elif choice == "7":
                         print("Loggin out...")
-                        ims.current_user.role = None
+                        ims.current_user = None
                         break
                     else:
                         print("Error: Invalid Choice. Try Again")
+               
                 else:
                     if choice == "1":
                         ims.view_inventory()
-                    if choice == "2":
+                    elif choice == "2":
                         ims.sale()
-                    if choice == "3":
+                    elif choice == "3":
                         print("Loggin out...")
-                        ims.current_user.role = None
+                        ims.current_user = None
                         break
                     else:
                         print("Error: Invalid Choice. Try Again")
