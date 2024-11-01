@@ -82,18 +82,26 @@ class InventoryManagementSystem:
     def add_product(self):
         if self.current_user.role == "Admin":
             try:
-                product_id = int(input("Enter Product ID: "))
+                product_id = int(input("\nEnter Product ID: "))
+
+                if product_id in self.products:
+                    print("\nError: Product ID already exist. Please enter a unique ID.")
+                    return
+
+
+                
                 name = str(input("Enter Product Name: "))
                 catagory = str(input("Enter Product Category: "))
                 price = float(input("Enter Product Price: "))
                 stock = int(input("Enter Product Stock: "))
+                
                 product = Product(product_id,name, catagory,price,stock)
                 self.products[product_id] = product
                 print(f"{name} product added in inventory.")
             except ValueError:
-                print("Error: Invalid input, Please enter valid numbers for Product ID, Price and Stock")
+                print("\nError: Invalid input, Please enter valid numbers for Product ID, Price and Stock")
         else:
-            print("Access denied. Users with the admin role can add product.")
+            print("\nAccess denied. Users with the admin role can add product.")
 
     # Method to edit the product
     def edit_product(self):
@@ -118,7 +126,7 @@ class InventoryManagementSystem:
                 del self.products[product_id]
                 print(f"Product with the ID {product_id} has been deleted.")
             else:
-                print("Error: Product not found.")
+                print("\nError: Product not found.")
         else:
             print("Access denied. Users with the admin role can delete product.")
  
