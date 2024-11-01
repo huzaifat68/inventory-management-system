@@ -127,6 +127,8 @@ class InventoryManagementSystem:
         print("Current Inventory:")
         for product in self.products.values():
             print(product.view_product())
+            print("-" * 50)
+
 
     # Method for searching product
     def search_product(self):
@@ -137,6 +139,8 @@ class InventoryManagementSystem:
             print("Search Result:")
             for product_info in product_found:
                 print(product_info)
+                print("-" * 50)
+
         else:
             print("Product not found.")
 
@@ -149,6 +153,8 @@ class InventoryManagementSystem:
                 print("Products with low stock:")
                 for product_info in low_stock:
                     print(product_info)
+                    print("-" * 50)
+
             else:
                 print("All product have more stock than threshold.")
         except ValueError:
@@ -188,6 +194,19 @@ class InventoryManagementSystem:
             print("Error: Please enter a valid Product ID and quantity.")
 
 
+    # Method for checking Users
+    def check_users(self):
+        if self.current_user.role == "Admin":
+            users = self.users
+
+            for user in users:
+                print(f"Username: {user.username}, Password: {user.password}, Role: {user.role}")
+                print("-" * 50)
+
+        else:
+            print("Access denied. Users with the admin role can adjust product.")           
+
+
 
 if __name__ == "__main__":
     ims = InventoryManagementSystem()
@@ -198,7 +217,8 @@ if __name__ == "__main__":
         if ims.login():
             while True:
                 if ims.current_user.role == "Admin":
-                    print("\n1: Add User\n2: Add Product\n3: Edit Product\n4: Delete Product\n5: View Inventory\n6: Adjust Stock\n7: Record a Sale\n8: Search Product\n9: Check Stock\n10: Logout")
+                    print("\n1: Add User\n2: Add Product\n3: Edit Product\n4: Delete Product\n5: View Inventory\n6: Adjust Stock\n7: Record a Sale\
+                        \n8: Search Product\n9: Check Stock\n10: Check Users\n11: Logout")
                 else:
                     print("\n1: View Inventory\n2: Recod a Sale\n3: Search Product\n4: Check Stock\n5: Logout")
 
@@ -224,6 +244,8 @@ if __name__ == "__main__":
                     elif choice == "9":
                         ims.stock_check()
                     elif choice == "10":
+                        ims.check_users()
+                    elif choice == "11":
                         print("Loggin out...")
                         ims.current_user = None
                         break
