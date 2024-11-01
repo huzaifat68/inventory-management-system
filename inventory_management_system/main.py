@@ -107,6 +107,29 @@ class InventoryManagementSystem:
         for product in self.products.values():
             print(product.view_product())
 
+    # Method for searching product
+    def search_product(self):
+        search = input("Enter Product name or Category to search: ").lower()
+        product_found = [product.view_product() for product in self.products.values()
+                        if search in product.name.lower() or search in product.catagory.lower()]
+        if product_found:
+            print("Search Result:")
+            for product_info in product_found:
+                print(product_info)
+        else:
+            print("Product not found.")
+
+    # Method for checking stock level
+    def stock_check(self):
+        threshold = int(input("Enter threshold stock: "))
+        low_stock = [product.view_product() for product in self.products.values() if product.stock <= threshold]
+        if low_stock:
+            print("Products with low stock:")
+            for product_info in low_stock:
+                print(product_info)
+        else:
+            print("All product have more stock than threshold.")
+
     # Method for adjusting stock
     def adjust_stock(self):
         if self.current_user.role == "Admin":
@@ -174,6 +197,10 @@ if __name__ == "__main__":
                     elif choice == "6":
                         ims.sale()
                     elif choice == "7":
+                        ims.search_product()
+                    elif choice == "8":
+                        ims.stock_check()
+                    elif choice == "9":
                         print("Loggin out...")
                         ims.current_user = None
                         break
