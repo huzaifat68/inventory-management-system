@@ -212,7 +212,31 @@ class InventoryManagementSystem:
                 print("-" * 50)
 
         else:
-            print("Access denied. Users with the admin role can adjust product.")           
+            print("Access denied. Users with the admin role can adjust product.")  
+
+    def delete_user(self):
+        if self.current_user.role == "Admin":
+            username = input("Enter username to delete user: ")
+            password = input("Enter password to delete user: ")
+
+            user_to_del = None
+            for user in self.users:
+                
+                if user.username == username and user.password == password:
+                    user_to_del = user
+                    break
+
+            if user_to_del:
+                print(f"\nUser has been deleted.")
+
+                self.users.remove(user_to_del)
+                
+            else:
+                print("Error: User not found.")            
+        else:
+            print("Access denied. Users with the admin role can adjust product.")
+
+
 
 
 
@@ -226,7 +250,7 @@ if __name__ == "__main__":
             while True:
                 if ims.current_user.role == "Admin":
                     print("\n1: Add User\n2: Add Product\n3: Edit Product\n4: Delete Product\n5: View Inventory\n6: Adjust Stock\n7: Record a Sale\
-                        \n8: Search Product\n9: Check Stock\n10: Check Users\n11: Logout")
+                        \n8: Search Product\n9: Check Stock\n10: Check Users\n11: Delete User\n12: Logout")
                 else:
                     print("\n1: View Inventory\n2: Recod a Sale\n3: Search Product\n4: Check Stock\n5: Logout")
 
@@ -254,6 +278,8 @@ if __name__ == "__main__":
                     elif choice == "10":
                         ims.check_users()
                     elif choice == "11":
+                        ims.delete_user()
+                    elif choice == "12":
                         print("Loggin out...")
                         ims.current_user = None
                         break
