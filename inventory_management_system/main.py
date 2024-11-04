@@ -55,7 +55,7 @@ class InventoryManagementSystem:
         password = input("Enter password: ")
         for user in self.users:
             if user.username == username and user.password == password:
-                print(f"Welcome {user.username}! You are logged in as {user.role}.")
+                print(f"\nWelcome {user.username}! You are logged in as {user.role}.")
                 self.current_user = user
                 return True
             
@@ -66,7 +66,7 @@ class InventoryManagementSystem:
     # Method for adding user
     def add_user(self):
         if self.current_user and self.current_user.role== "Admin":
-            username = input("Enter new username: ")
+            username = input("\nEnter new username: ")
             password = input("Enter new password: ")
             role = input("Enter new role (Admin/User): ").capitalize()
             user = User(username,password,role)
@@ -106,7 +106,7 @@ class InventoryManagementSystem:
     # Method to edit the product
     def edit_product(self):
         if self.current_user.role == "Admin":
-            prodcut_id = int(input("Enter product ID: "))
+            prodcut_id = int(input("\nEnter product ID: "))
             product = self.products.get(prodcut_id)
             if product:
                 product.name = input("Enter new product Name: ")
@@ -124,7 +124,7 @@ class InventoryManagementSystem:
             product_id = int(input("Enter product ID to delete the product: "))
             if product_id in self.products:
                 del self.products[product_id]
-                print(f"Product with the ID {product_id} has been deleted.")
+                print(f"\nProduct with the ID {product_id} has been deleted.")
             else:
                 print("\nError: Product not found.")
         else:
@@ -140,7 +140,7 @@ class InventoryManagementSystem:
 
     # Method for searching product
     def search_product(self):
-        search = input("Enter Product name or Category to search: ").lower()
+        search = input("\nEnter Product name or Category to search: ").lower()
         product_found = [product.view_product() for product in self.products.values()
                         if search in product.name.lower() or search in product.catagory.lower()]
         if product_found:
@@ -155,10 +155,10 @@ class InventoryManagementSystem:
     # Method for checking stock level
     def stock_check(self):
         try:
-            threshold = int(input("Enter threshold stock: "))
+            threshold = int(input("\nEnter threshold stock: "))
             low_stock = [product.view_product() for product in self.products.values() if product.stock <= threshold]
             if low_stock:
-                print("Products with low stock:")
+                print("\nProducts with low stock:")
                 for product_info in low_stock:
                     print(product_info)
                     print("-" * 50)
@@ -172,7 +172,7 @@ class InventoryManagementSystem:
     def adjust_stock(self):
         if self.current_user.role == "Admin":
             try:
-                product_id = int(input("Enter product ID to adjust stock: "))
+                product_id = int(input("\nEnter product ID to adjust stock: "))
                 product = self.products.get(product_id)
                 if product:
                     quantity = int(input("Enter quantity to add adjust stock ( '+' to add and '-' to reduce): "))
@@ -193,7 +193,7 @@ class InventoryManagementSystem:
                 quantity = int(input("Enter quantity to sell: "))
                 if quantity > 0 and quantity <= product.stock:
                     product.stock_update(-quantity)
-                    print(f"Sale completed, {quantity} units of the {product.name} sold")
+                    print(f"\nSale completed, {quantity} units of the {product.name} sold")
                 else:
                     print(f"Error: Invalid Quanity, Current stock {product.stock}")
             else:
