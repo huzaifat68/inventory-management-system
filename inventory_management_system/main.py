@@ -1,21 +1,32 @@
+"""
+Console Based Inventory Management System
+
+Default Users:
+username = admin, user1
+password = admin123, user123
+"""
 
 #User class for managing roles based access
 class User:
+    
     def __init__(self,username,password,role):
         self.username = username
         self.password = password
         self.role = role 
 
 
+
 # Product class for managing and creating products
 class Product:
+    
     def __init__(self,product_id,name,catagory,price,stock):
         self.product_id = product_id
         self.name = name
         self.catagory = catagory
         self.price = price
         self.stock = stock
-    
+
+
     # Method for updating stock
     def stock_update(self,quantity):
         if self.stock + quantity < 0:
@@ -24,6 +35,7 @@ class Product:
             self.stock += quantity
             print(f"Stock updated for {self.name}, New stock is {self.stock}.")
 
+
     # Method for viewing product information
     def view_product(self):
         return (f"ID: {self.product_id}, Name: {self.name}, Catagory: {self.catagory},"
@@ -31,8 +43,8 @@ class Product:
             
 
 
-
 class InventoryManagementSystem:
+
    # Initialize the system , storing user, product and current user  
     def __init__(self):
         self.users = []
@@ -48,6 +60,7 @@ class InventoryManagementSystem:
         user_1 = User("user1","user123","User")
         self.users.append(admin_user)
         self.users.append(user_1)
+
 
     # Method for login
     def login(self):
@@ -76,7 +89,6 @@ class InventoryManagementSystem:
         else:
             print("Access denied. Users with the admin role can add users.")
 
-
         
     # Method for adding product
     def add_product(self):
@@ -88,8 +100,6 @@ class InventoryManagementSystem:
                     print("\nError: Product ID already exist. Please enter a unique ID.")
                     return
 
-
-                
                 name = str(input("Enter Product Name: "))
                 catagory = str(input("Enter Product Category: "))
                 price = float(input("Enter Product Price: "))
@@ -102,6 +112,7 @@ class InventoryManagementSystem:
                 print("\nError: Invalid input, Please enter valid numbers for Product ID, Price and Stock")
         else:
             print("\nAccess denied. Users with the admin role can add product.")
+
 
     # Method to edit the product
     def edit_product(self):
@@ -118,6 +129,7 @@ class InventoryManagementSystem:
         else:
             print("Access denied. Users with the admin role can Edit product.")
 
+
     # Method for deleting product
     def delete_product(self):
         if self.current_user.role == "Admin":
@@ -129,7 +141,8 @@ class InventoryManagementSystem:
                 print("\nError: Product not found.")
         else:
             print("Access denied. Users with the admin role can delete product.")
- 
+
+
     # Method for viewing inventory
     def view_inventory(self):
         print("Current Inventory:")
@@ -148,9 +161,9 @@ class InventoryManagementSystem:
             for product_info in product_found:
                 print(product_info)
                 print("-" * 50)
-
         else:
             print("Product not found.")
+
 
     # Method for checking stock level
     def stock_check(self):
@@ -162,11 +175,11 @@ class InventoryManagementSystem:
                 for product_info in low_stock:
                     print(product_info)
                     print("-" * 50)
-
             else:
                 print("All product have more stock than threshold.")
         except ValueError:
             print("Error: Enter a valid quantity for threshold.")
+
 
     # Method for adjusting stock
     def adjust_stock(self):
@@ -183,6 +196,7 @@ class InventoryManagementSystem:
                 print("Error: Please enter a valid Product ID and Quantity.")
         else:
             print("Access denied. Users with the admin role can adjust product.")
+
 
     # Method for sale
     def sale(self):
@@ -214,6 +228,8 @@ class InventoryManagementSystem:
         else:
             print("Access denied. Users with the admin role can adjust product.")  
 
+
+    # Method for deleting user
     def delete_user(self):
         if self.current_user.role == "Admin":
             username = input("Enter username to delete user: ")
