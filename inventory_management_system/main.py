@@ -120,8 +120,8 @@ class InventoryManagementSystem:
     def edit_product(self):
         if self.current_user.role == "Admin":
             try:
-                prodcut_id = int(input("\nEnter product ID: "))
-                product = self.products.get(prodcut_id)
+                product_id = int(input("\nEnter product ID: "))
+                product = self.products.get(product_id)
                 if product:
                     product.name = input("Enter new product Name: ")
                     product.catagory = input("Enter new product Catagory: ")
