@@ -157,7 +157,7 @@ class InventoryManagementSystem:
             print("Current Inventory:")
             for product in self.products.values():
                 print(product.view_product())
-                print("-" * 50)
+                print("-" * 60)
         except ValueError:
             print("ValueError: Exception Handling SE")
 
@@ -205,7 +205,7 @@ class InventoryManagementSystem:
                         quantity = int(input("Enter quantity to add adjust stock ( '+' to add and '-' to reduce): "))
                         product.stock_update(quantity)
                     else:
-                        print("Product not found")
+                        print("Product not found.")
                 except ValueError:
                     print("Error: Please enter a valid Product ID and Quantity.")
             else:
@@ -222,7 +222,7 @@ class InventoryManagementSystem:
                 quantity = int(input("Enter quantity to sell: "))
                 if quantity > 0 and quantity <= product.stock:
                     product.stock_update(-quantity)
-                    print(f"\nSale completed, {quantity} units of the {product.name} sold")
+                    print(f"\nSale completed, {quantity} units of the {product.name}, sold remaining stock {product.stock}")
                 else:
                     print(f"Error: Invalid Quanity, Current stock {product.stock}")
             else:
