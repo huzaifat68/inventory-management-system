@@ -1,48 +1,185 @@
-## Final Project: Inventory Management System (IMS)
+Here’s your **README.md** file, covering all features, methods, and functionality mentioned in your program:  
 
-### Project Title:
+```markdown
+# Console-Based Inventory Management System
 
-**Inventory Management System (IMS)**
+A robust Python-based inventory management system designed for efficient tracking of products, managing stock levels, handling user roles, and facilitating sales operations. This program supports both **Admin** and **User** roles, offering a menu-driven interface for seamless interaction.
 
-### Objective:
+---
 
-Build a console-based system that manages inventory for a small business. The system should allow admins to create, update, view, and delete products in the inventory while keeping track of stock levels and handling multiple users with role-based permissions.
+## Features
 
-### Requirements & Functionalities:
+### User Management
+- **Admin Role**:  
+  - Add, edit, delete users.  
+  - Change passwords for any user.  
+  - View all registered users.
+- **User Role**:  
+  - Limited access to view inventory, record sales, and check stock.
 
-1. **User Authentication and Role Management**
+### Product Management
+- Add new products with unique IDs.
+- Edit product details (name, category, price, stock).
+- Delete products from the inventory.
+- Search products by name or category.
+- View all inventory details in a tabular format.
 
-   - Support different roles like “Admin” and “User.”
-   - Admins can add, edit, and delete products, whereas Users can only view inventory details.
-   - Implement a basic login system with username and password validation.
+### Inventory Operations
+- Monitor stock levels with a threshold check for low stock.  
+- Adjust stock quantities (both increment and decrement).  
+- View inventory to see product details like ID, name, category, price, and stock.
 
-2. **Product Management (OOP Concepts)**
+### Sales Management
+- Record sales and automatically update stock levels.
+- Prevent sales exceeding available stock.  
 
-   - Create a `Product` class with attributes like `product_id`, `name`, `category`, `price`, and `stock_quantity`.
-   - Create methods for adding, editing, and deleting products.
-   - Store product information using lists or dictionaries.
+### Exception Handling
+- Robust error handling for invalid inputs, access violations, and operational errors.  
+- Clear prompts and error messages for seamless user experience.
 
-3. **Inventory Operations**
+### Access Control
+- Secure system with role-based permissions.  
+- Default users for quick setup and testing.
 
-   - Track stock levels: when stock reaches a low threshold, prompt a restocking message.
-   - Implement methods for viewing all products, searching by product name or category, and filtering by stock levels.
-   - Allow stock adjustments for existing products (e.g., restock or reduce inventory based on sales).
+---
 
-4. **Error Handling**
-   - Ensure proper error handling for invalid inputs, such as incorrect login details or attempts to update non-existent products.
-   - Use exceptions to handle potential issues, ensuring smooth flow.
+## Prerequisites
 
-### Learning Outcomes
+1. Python 3.8+ must be installed on your system.
+2. Clone or download this repository to your local machine.
+3. Ensure the Python environment is correctly configured to execute the program.
 
-- **OOP principles**: Implement classes, encapsulation, and methods for CRUD operations.
-- **Data Structures**: Use dictionaries and lists for data storage and manipulation.
-- **Logic Building**: Develop functions for role-based access, transaction handling, and inventory management.
-- **Error Handling**: Practice exception handling for robust code.
+---
 
-This project provides hands-on practice with the concepts you’ve learned while focusing on logic-based development.
+## How to Run the Program
 
-## Instructions
+1. Open a terminal or command prompt.
+2. Navigate to the directory containing the program file.
+3. Execute the program using the command:  
+   ```bash
+   python inventory_management.py
+   ```
+4. Log in using the default credentials or a registered user account:
+   - **Admin**:  
+     - Username: `admin`  
+     - Password: `admin123`
+   - **User**:  
+     - Username: `user1`  
+     - Password: `user123`
 
-- Please create the docker image of the template provided in the repository.
-- You can use DevContainer to write your code.
-- The basic requirement is the console based project but if anyone wants to extend it with more features, he can go for it. For a basic GUI, `streamlit` can be used. We have already added it in the packages.
+---
+
+## User Roles
+
+### Admin Role
+Admins have full control of the system, including:  
+- Adding, editing, and deleting users or products.  
+- Managing inventory operations such as stock adjustments and product deletions.  
+- Viewing all registered users.  
+- Changing user passwords.  
+
+### User Role
+Users have limited access to:  
+- View inventory.  
+- Record product sales.  
+- Search for products by name or category.  
+- Monitor stock levels.
+
+---
+
+## Default Users
+
+To get started quickly, the following users are pre-configured:  
+
+| **Username** | **Password** | **Role**  |
+|--------------|--------------|-----------|
+| admin        | admin123     | Admin     |
+| user1        | user123      | User      |
+
+---
+
+## Operations
+
+### 1. Adding a User (Admin Only)
+Admins can register new users with a unique username, password, and role.
+
+### 2. Managing Products (Admin Only)
+Admins can add new products, edit existing ones, delete products, or view inventory.
+
+### 3. Searching Products
+Users and Admins can search for products by name or category to get detailed results.
+
+### 4. Recording Sales
+Products can be sold by providing the product ID and quantity. The system ensures sufficient stock is available before proceeding.
+
+### 5. Monitoring Stock Levels
+Admins and Users can check inventory status. Products with stock levels below a specified threshold are flagged.
+
+---
+
+## Example Menu Options
+
+### Admin Menu
+```
+1: Add User  
+2: Add Product  
+3: Edit Product  
+4: Delete Product  
+5: View Inventory  
+6: Adjust Stock  
+7: Record a Sale  
+8: Search Product  
+9: Check Stock  
+10: Check Users  
+11: Delete User  
+12: Change Password  
+13: Logout
+```
+
+### User Menu
+```
+1: View Inventory  
+2: Record a Sale  
+3: Search Product  
+4: Check Stock  
+5: Logout
+```
+
+---
+
+## Exception Handling
+
+The program includes comprehensive error handling:
+- **Invalid Inputs**: Prompts for correct data types when invalid inputs are entered.  
+- **Role-Based Access Control**: Prevents unauthorized actions based on user roles.  
+- **Operational Errors**: Handles scenarios like duplicate product IDs, insufficient stock, and unregistered users.  
+
+---
+
+## Limitations
+
+- The system does not use a database, meaning all data is stored temporarily and lost upon program exit.
+- Features like multi-threading, real-time updates, and persistent storage can be added for scalability.
+
+---
+
+## Future Improvements
+
+- Integration with a database for persistent storage.
+- Enhanced reporting tools for sales and inventory trends.
+- User interface improvements with graphical elements.
+
+---
+
+## License
+
+This project is open-source and available for modification under the MIT License.
+
+---
+
+## Author
+
+Developed by Muhammad Huzaifa Tahir. Contributions and feedback are welcome!
+```
+
+---

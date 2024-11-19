@@ -29,18 +29,24 @@ class Product:
 
     # Method for updating stock
     def stock_update(self,quantity):
-        if self.stock + quantity < 0:
-            print(f"Error: Not enough stock, current stock is {self.stock}.")
-        else:
-            self.stock += quantity
-            print(f"Stock updated for {self.name}, New stock is {self.stock}.")
+        try:
+            if self.stock + quantity < 0:
+                print(f"Error: Not enough stock, current stock is {self.stock}.")
+            else:
+                self.stock += quantity
+                print(f"Stock updated for {self.name}, New stock is {self.stock}.")
+        except Exception as e:
+            print(f"Unexpected error while updating stock: {e}")
 
 
     # Method for viewing product information
     def view_product(self):
-        return (f"ID: {self.product_id}, Name: {self.name}, Catagory: {self.catagory},"
-        f"Price: {self.price}, Stock: {self.stock}.")
-            
+        try:
+            return (f"ID: {self.product_id}, Name: {self.name}, Catagory: {self.catagory},"
+            f"Price: {self.price}, Stock: {self.stock}.")
+        except Exception as e:
+            print(f"Error while viewing product: {e}")
+            return None    
 
 
 class InventoryManagementSystem:
@@ -50,30 +56,36 @@ class InventoryManagementSystem:
         self.users = []
         self.products = {}
         self.current_user = None
-
         self.default_user()
 
 
     # Adding default user
     def default_user(self):
-        admin_user = User("admin","admin123","Admin")
-        user_1 = User("user1","user123","User")
-        self.users.append(admin_user)
-        self.users.append(user_1)
+        try:
+            admin_user = User("admin","admin123","Admin")
+            user_1 = User("user1","user123","User")
+            self.users.append(admin_user)
+            self.users.append(user_1)
+        except Exception as e:
+            print(f"Error while creating default users: {e}")
 
 
     # Method for login
     def login(self):
-        username = input("\nEnter username: ")
-        password = input("Enter password: ")
-        for user in self.users:
-            if user.username == username and user.password == password:
-                print(f"\nWelcome {user.username}! You are logged in as {user.role}.")
-                self.current_user = user
-                return True
-            
-        print("You have enterd wrong username or password.")
-        return False
+        try:
+            username = input("\nEnter username: ")
+            password = input("Enter password: ")
+            for user in self.users:
+                if user.username == username and user.password == password:
+                    print(f"\nWelcome {user.username}! You are logged in as {user.role}.")
+                    self.current_user = user
+                    return True
+                
+            print("You have enterd wrong username or password.")
+            return False
+        except Exception as e:
+            print(f"Unexpected error during login: {e}")
+            return False
 
 
     # Method for adding user
@@ -87,7 +99,9 @@ class InventoryManagementSystem:
                 self.users.append(user)
                 print(f"User {username} with the role {role} added")
             except ValueError:
-                print("ValueError: Exception Handling SE")
+                print("Error: Invalid input for user details.")
+            except Exception as e:
+                print(f"Unexpected error while adding user: {e}")
         else:
             print("Access denied. Users with the admin role can add users.")
 
@@ -111,7 +125,9 @@ class InventoryManagementSystem:
                 self.products[product_id] = product
                 print(f"{name} product added in inventory.")
             except ValueError:
-                print("\nError: Invalid input, Please enter valid numbers for Product ID, Price and Stock")
+                print("\nError: Invalid input. Please enter valid numbers for Product ID, Price, and Stock.")
+            except Exception as e:
+                print(f"Unexpected error while adding product: {e}")
         else:
             print("\nAccess denied. Users with the admin role can add product.")
 
@@ -130,25 +146,31 @@ class InventoryManagementSystem:
                 else:
                     print("Product not found.")
             except ValueError:
-                print("ValueError: Exception Handling SE")
+                print("Error: Invalid input for product details.")
+            except Exception as e:
+                print(f"Unexpected error while editing product: {e}")
         else:
             print("Access denied. Users with the admin role can Edit product.")
 
 
     # Method for deleting product
     def delete_product(self):
-        try:
-            if self.current_user.role == "Admin":
+        
+        if self.current_user.role == "Admin":
+            try:
                 product_id = int(input("Enter product ID to delete the product: "))
                 if product_id in self.products:
                     del self.products[product_id]
                     print(f"\nProduct with the ID {product_id} has been deleted.")
                 else:
                     print("\nError: Product not found.")
-            else:
+            except ValueError:
+                print("Error: Invalid Product ID.")
+            except Exception as e:
+                print(f"Unexpected error while deleting product: {e}")
+        else:
                 print("Access denied. Users with the admin role can delete product.")
-        except ValueError:
-            print("ValueError: Exception Handling SE")
+        
 
 
     # Method for viewing inventory
@@ -158,8 +180,8 @@ class InventoryManagementSystem:
             for product in self.products.values():
                 print(product.view_product())
                 print("-" * 60)
-        except ValueError:
-            print("ValueError: Exception Handling SE")
+        except Exception as e:
+            print(f"Unexpected error while viewing inventory: {e}")
 
 
     # Method for searching product
@@ -175,8 +197,8 @@ class InventoryManagementSystem:
                     print("-" * 50)
             else:
                 print("Product not found.")
-        except ValueError:
-            print("ValueError: Exception Handling SE")
+        except Exception as e:
+            print(f"Unexpected error while searching for product: {e}")
 
 
     # Method for checking stock level
@@ -192,7 +214,9 @@ class InventoryManagementSystem:
             else:
                 print("All product have more stock than threshold.")
         except ValueError:
-            print("Error: Enter a valid quantity for threshold.")
+            print("Error: Invalid input for threshold.")
+        except Exception as e:
+            print(f"Unexpected error during stock check: {e}")
 
 
     # Method for adjusting stock
@@ -208,6 +232,8 @@ class InventoryManagementSystem:
                         print("Product not found.")
                 except ValueError:
                     print("Error: Please enter a valid Product ID and Quantity.")
+                except Exception as e:
+                    print(f"Unexpected error during stock check: {e}")
             else:
                 print("Access denied. Users with the admin role can adjust product.")
         
@@ -228,7 +254,9 @@ class InventoryManagementSystem:
             else:
                 print("Error: Product not found in record")
         except ValueError:
-            print("Error: Please enter a valid Product ID and quantity.")
+            print("Error: Invalid input for Product ID or quantity.")
+        except Exception as e:
+            print(f"Unexpected error while processing sale: {e}")
 
 
     # Method for checking Users
@@ -240,8 +268,8 @@ class InventoryManagementSystem:
                     for user in users:
                         print(f"Username: {user.username}, Password: {user.password}, Role: {user.role}")
                         print("-" * 50)
-                except ValueError:
-                    print("ValueError: Exception Handling SE")
+                except Exception as e:
+                    print(f"Unexpected error while checking users: {e}")
             else:
                 print("Access denied. Users with the admin role can adjust product.")  
 
@@ -269,8 +297,8 @@ class InventoryManagementSystem:
                         
                     else:
                         print("Error: User not found.")  
-                except ValueError:
-                    print("ValueError: Exception Handling SE")          
+                except Exception as e:
+                    print(f"Unexpected error while deleting user {e}")          
             else:
                 print("Access denied. Users with the admin role can adjust product.")
         
