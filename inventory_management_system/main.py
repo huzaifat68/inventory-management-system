@@ -64,7 +64,7 @@ class InventoryManagementSystem:
 
     # Method for login
     def login(self):
-        username = input("Enter username: ")
+        username = input("\nEnter username: ")
         password = input("Enter password: ")
         for user in self.users:
             if user.username == username and user.password == password:
@@ -274,7 +274,37 @@ class InventoryManagementSystem:
             else:
                 print("Access denied. Users with the admin role can adjust product.")
         
-        
+
+    # Method for changing the password (Admin only)
+    def change_password(self):
+        if self.current_user and self.current_user.role == "Admin":
+            try:
+                username = input("\nEnter the username of the account to change the password: ")
+                user_to_update = None
+
+                # Find the user
+                for user in self.users:
+                    if user.username == username:
+                        user_to_update = user
+                        break
+
+                if user_to_update:
+                    new_password = input("Enter the new password: ")
+                    confirm_password = input("Confirm the new password: ")
+                    
+                    if new_password == confirm_password:
+                        user_to_update.password = new_password
+                        print(f"Password for user '{username}' has been updated successfully!")
+                    else:
+                        print("Error: New password and confirm password do not match.")
+                else:
+                    print("Error: User not found.")
+            except Exception as e:
+                print("An unexpected error occurred while changing the password.")
+                print(f"Debug info: {e}")
+        else:
+            print("Access denied. Only admins can change passwords.")
+   
 
 
 
@@ -291,7 +321,7 @@ if __name__ == "__main__":
                     while True:
                         if ims.current_user.role == "Admin":
                             print("\n1: Add User\n2: Add Product\n3: Edit Product\n4: Delete Product\n5: View Inventory\n6: Adjust Stock\n7: Record a Sale\
-                                \n8: Search Product\n9: Check Stock\n10: Check Users\n11: Delete User\n12: Logout")
+                                \n8: Search Product\n9: Check Stock\n10: Check Users\n11: Delete User\n12: Change Password\n13: Logout")
                         else:
                             print("\n1: View Inventory\n2: Record a Sale\n3: Search Product\n4: Check Stock\n5: Logout")
 
@@ -321,6 +351,8 @@ if __name__ == "__main__":
                             elif choice == "11":
                                 ims.delete_user()
                             elif choice == "12":
+                                ims.change_password()
+                            elif choice == "13":
                                 print("Logging out...")
                                 ims.current_user = None
                                 break
