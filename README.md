@@ -1,6 +1,3 @@
-Here’s your **README.md** file, covering all features, methods, and functionality mentioned in your program:  
-
-```markdown
 # Console-Based Inventory Management System
 
 A robust Python-based inventory management system designed for efficient tracking of products, managing stock levels, handling user roles, and facilitating sales operations. This program supports both **Admin** and **User** roles, offering a menu-driven interface for seamless interaction.
@@ -58,7 +55,6 @@ A robust Python-based inventory management system designed for efficient trackin
 3. Execute the program using the command:  
    ```bash
    python inventory_management.py
-   ```
 4. Log in using the default credentials or a registered user account:
    - **Admin**:  
      - Username: `admin`  
@@ -180,6 +176,5 @@ This project is open-source and available for modification under the MIT License
 ## Author
 
 Developed by Muhammad Huzaifa Tahir. Contributions and feedback are welcome!
-```
 
 ---
