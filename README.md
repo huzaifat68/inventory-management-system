@@ -54,7 +54,7 @@ A robust Python-based inventory management system designed for efficient trackin
 2. Navigate to the directory containing the program file.
 3. Execute the program using the command:  
    ```bash
-   python inventory_management.py
+   python main.py
 4. Log in using the default credentials or a registered user account:
    - **Admin**:  
      - Username: `admin`  
