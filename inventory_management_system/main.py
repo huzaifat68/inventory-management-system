@@ -6,6 +6,8 @@ username = admin, user1
 password = admin123, user123
 """
 
+import csv 
+
 #User class for managing roles based access
 class User:
     
@@ -334,7 +336,38 @@ class InventoryManagementSystem:
             print("Access denied. Only admins can change passwords.")
    
 
+    # Method to export inventory to CSV
+    def export_inventory_to_csv(self):
+        if self.current_user.role == "Admin":
+            try:
+                filename = input("Enter the filename to export inventory (default: inventory.csv): ") or "inventory.csv"
+                data = []
 
+                # Prepare the data for CSV export
+                for product in self.products.values():
+                    data.append({
+                        "Product ID": product.product_id,
+                        "Name": product.name,
+                        "Category": product.catagory,
+                        "Price": product.price,
+                        "Stock": product.stock
+                    })
+
+                # Write data to CSV
+                if not data:
+                    print("No inventory data to export.")
+                else:
+                    with open(filename, mode="w", newline="") as file:
+                        writer = csv.DictWriter(file, fieldnames=data[0].keys())
+                        writer.writeheader()
+                        writer.writerows(data)
+                    print(f"Inventory exported successfully to '{filename}'.")
+            except PermissionError:
+                print(f"Error: Permission denied. Please close the file '{filename}' if it is open and try again.")
+            except Exception as e:
+                print(f"Unexpected error while exporting inventory: {e}")
+        else:
+            print("Access denied. Only admins can export inventory.")
 
 
 
@@ -349,7 +382,7 @@ if __name__ == "__main__":
                     while True:
                         if ims.current_user.role == "Admin":
                             print("\n1: Add User\n2: Add Product\n3: Edit Product\n4: Delete Product\n5: View Inventory\n6: Adjust Stock\n7: Record a Sale\
-                                \n8: Search Product\n9: Check Stock\n10: Check Users\n11: Delete User\n12: Change Password\n13: Logout")
+                                \n8: Search Product\n9: Check Stock\n10: Check Users\n11: Delete User\n12: Change Password\n13: Export Inventory\n14: Logout")
                         else:
                             print("\n1: View Inventory\n2: Record a Sale\n3: Search Product\n4: Check Stock\n5: Logout")
 
@@ -381,6 +414,8 @@ if __name__ == "__main__":
                             elif choice == "12":
                                 ims.change_password()
                             elif choice == "13":
+                                ims.export_inventory_to_csv()
+                            elif choice == "14":
                                 print("Logging out...")
                                 ims.current_user = None
                                 break
