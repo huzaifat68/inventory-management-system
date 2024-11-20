@@ -52,91 +52,118 @@ This is a console-based Inventory Management System (IMS) built in Python, desig
 3. Run the Python file:
 
    ```bash
-   python ims_system.py
-   ```
+   python inventory_management.py
+4. Log in using the default credentials or a registered user account:
+   - **Admin**:  
+     - Username: `admin`  
+     - Password: `admin123`
+   - **User**:  
+     - Username: `user1`  
+     - Password: `user123`
 
-4. Follow the on-screen prompts to log in using the default users or add new users if you're an admin.
+---
 
-## Requirements
+## User Roles
 
-- Python 3.x
-- No additional libraries required (uses built-in libraries like `csv`).
+### Admin Role
+Admins have full control of the system, including:  
+- Adding, editing, and deleting users or products.  
+- Managing inventory operations such as stock adjustments and product deletions.  
+- Viewing all registered users.  
+- Changing user passwords.  
 
-## Functionality Breakdown
+### User Role
+Users have limited access to:  
+- View inventory.  
+- Record product sales.  
+- Search for products by name or category.  
+- Monitor stock levels.
 
-### User Class
-- **Attributes**: 
-  - `username`: The username of the user.
-  - `password`: The password for authentication.
-  - `role`: The user's role (`Admin` or `User`).
-  
-### Product Class
-- **Attributes**:
-  - `product_id`: Unique identifier for the product.
-  - `name`: The name of the product.
-  - `catagory`: The category to which the product belongs.
-  - `price`: The price of the product.
-  - `stock`: The current stock level of the product.
+---
 
-- **Methods**:
-  - `stock_update(quantity)`: Updates the stock by the specified quantity (positive for adding, negative for reducing).
-  - `view_product()`: Displays the product details.
+## Default Users
 
-### InventoryManagementSystem Class
-This class acts as the main controller for the entire system, managing users, products, and transactions. Key methods include:
-  
-- **User Management**:
-  - `add_user()`: Adds a new user (Admin only).
-  - `delete_user()`: Deletes an existing user (Admin only).
-  - `change_password()`: Allows an Admin to change a user's password.
-  
-- **Product Management**:
-  - `add_product()`: Adds a new product (Admin only).
-  - `edit_product()`: Edits an existing product (Admin only).
-  - `delete_product()`: Deletes a product (Admin only).
-  - `view_inventory()`: Displays all products in the inventory.
-  - `search_product()`: Searches for products by name or category.
-  - `export_inventory_to_csv()`: Exports the inventory to a CSV file (Admin only).
-  
-- **Stock Management**:
-  - `adjust_stock()`: Allows an Admin to update stock levels.
-  - `stock_check()`: Displays products with stock below a certain threshold.
-  
-- **Sales Management**:
-  - `sale()`: Records a sale, updating stock levels accordingly.
+To get started quickly, the following users are pre-configured:  
 
-### Error Handling
-The system handles various types of exceptions such as:
-- Value errors (invalid input types)
-- Attribute errors (issues with user attributes)
-- General unexpected errors, with informative messages.
+| **Username** | **Password** | **Role**  |
+|--------------|--------------|-----------|
+| admin        | admin123     | Admin     |
+| user1        | user123      | User      |
 
-### Role-Based Access
-- **Admin**: Full access to manage users, products, and inventory.
-- **User**: Limited access to view inventory and record sales.
+---
 
-## Example of Use
+## Operations
 
-1. **Login as Admin**: 
-   - Enter `admin` as username and `admin123` as password.
-   - Admin has access to all functionality (adding products, managing users, etc.).
-   
-2. **Login as User**:
-   - Enter `user1` as username and `user123` as password.
-   - Users can only view the inventory, search for products, and record sales.
+### 1. Adding a User (Admin Only)
+Admins can register new users with a unique username, password, and role.
 
-3. **Adding a Product**:
-   - Admin can add products using the `add_product()` method, entering details like ID, name, category, price, and stock.
+### 2. Managing Products (Admin Only)
+Admins can add new products, edit existing ones, delete products, or view inventory.
 
-4. **Selling a Product**:
-   - Users can record sales by selecting the product and entering the quantity sold. The stock will be updated automatically.
+### 3. Searching Products
+Users and Admins can search for products by name or category to get detailed results.
 
-## Troubleshooting
+### 4. Recording Sales
+Products can be sold by providing the product ID and quantity. The system ensures sufficient stock is available before proceeding.
 
-### Common Errors:
-- **Invalid Credentials**: Ensure that the username and password match the default or registered users.
-- **Product ID Already Exists**: Ensure that each product has a unique ID when adding products.
-- **Stock Updates**: Make sure the quantity to be adjusted does not exceed the available stock.
+### 5. Monitoring Stock Levels
+Admins and Users can check inventory status. Products with stock levels below a specified threshold are flagged.
+
+---
+
+## Example Menu Options
+
+### Admin Menu
+```
+1: Add User  
+2: Add Product  
+3: Edit Product  
+4: Delete Product  
+5: View Inventory  
+6: Adjust Stock  
+7: Record a Sale  
+8: Search Product  
+9: Check Stock  
+10: Check Users  
+11: Delete User  
+12: Change Password  
+13: Logout
+```
+
+### User Menu
+```
+1: View Inventory  
+2: Record a Sale  
+3: Search Product  
+4: Check Stock  
+5: Logout
+```
+
+---
+
+## Exception Handling
+
+The program includes comprehensive error handling:
+- **Invalid Inputs**: Prompts for correct data types when invalid inputs are entered.  
+- **Role-Based Access Control**: Prevents unauthorized actions based on user roles.  
+- **Operational Errors**: Handles scenarios like duplicate product IDs, insufficient stock, and unregistered users.  
+
+---
+
+## Limitations
+
+- The system does not use a database, meaning all data is stored temporarily and lost upon program exit.
+- Features like multi-threading, real-time updates, and persistent storage can be added for scalability.
+
+---
+
+## Future Improvements
+
+- Integration with a database for persistent storage.
+- Enhanced reporting tools for sales and inventory trends.
+- User interface improvements with graphical elements.
+
+---
 
 ## License
 
