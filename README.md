@@ -1,149 +1,206 @@
-# Console-Based Inventory Management System (IMS)
+# Console-Based Inventory Management System
 
-This is a console-based Inventory Management System (IMS) built in Python, designed to manage products, users, stock levels, and sales transactions. The system allows users with the `Admin` role to manage users, products, stock, and more. It features an easy-to-use interface with role-based access for both admins and regular users.
+This is a *Python-based console application* designed to manage an inventory system efficiently. It includes features like user management, product management, stock updates, sales recording, and exporting data to CSV files. The application is designed to be role-based, providing *Admin* users with full control and *Standard Users* with limited access.
+
+---
 
 ## Features
 
-### User Management
-- **Admin Role**: 
-  - Add, edit, or delete users.
-  - Change user passwords.
-  - View all users and their roles.
-  
-- **User Role**:
-  - Regular users can only view the inventory and record sales.
+1. *Role-Based Access Control*:
+   - *Admin*:
+     - Manage users (add, view, delete, change passwords).
+     - Add, edit, delete, and view products.
+     - Adjust stock levels.
+     - Record and export sales data.
+     - Export inventory data to a CSV file.
+   - *User*:
+     - View products.
+     - Record sales.
+     - Search for products and check stock levels.
 
-### Product Management
-- **Admin Role**: 
-  - Add, edit, or delete products.
-  - View and search products by name or category.
-  - Export inventory data to a CSV file.
-  
-- **Product Details**: 
-  - Each product contains the following information: Product ID, Name, Category, Price, and Stock.
+2. *Product Management*:
+   - Add new products to the inventory.
+   - Edit existing product details.
+   - Delete products from the inventory.
 
-### Stock Management
-- **Adjust Stock**: Admins can update product stock levels.
-- **Sale**: Regular users and admins can sell products, which will update the stock accordingly.
-- **Stock Check**: Admins can view products with stock levels below a specified threshold.
+3. *Stock Management*:
+   - Adjust product stock (add or reduce quantity).
+   - View low-stock products based on a threshold.
 
-### Inventory
-- View the entire inventory with detailed product information.
+4. *Sales Management*:
+   - Record sales.
+   - Automatically adjust stock after a sale.
+   - Export sales data to a CSV file.
 
-### Export Inventory
-- Admin users can export the current inventory to a CSV file.
+5. *Data Export*:
+   - Export inventory and sales data to CSV files for backup and reporting.
 
-## Default Users
+6. *Search Functionality*:
+   - Search for products by name or category.
 
-- **Admin User**: 
-  - Username: `admin`
-  - Password: `admin123`
-  - Role: `Admin`
+7. *Default Users*:
+   - *Admin*: admin/admin123
+   - *User*: user1/user123
 
-- **Regular User**: 
-  - Username: `user1`
-  - Password: `user123`
-  - Role: `User`
+---
 
-## How to Run the Program
+## Installation
 
-1. Clone or download the repository.
-2. Ensure that Python 3.x is installed on your system.
-3. Run the Python file:
+1. Clone or download this repository.
+2. Ensure you have Python installed (version 3.13.0 or higher recommended).
+3. Run the script using:
 
-   ```bash
-   python ims_system.py
-   ```
-
-4. Follow the on-screen prompts to log in using the default users or add new users if you're an admin.
-
-## Requirements
-
-- Python 3.x
-- No additional libraries required (uses built-in libraries like `csv`).
-
-## Functionality Breakdown
-
-### User Class
-- **Attributes**: 
-  - `username`: The username of the user.
-  - `password`: The password for authentication.
-  - `role`: The user's role (`Admin` or `User`).
-  
-### Product Class
-- **Attributes**:
-  - `product_id`: Unique identifier for the product.
-  - `name`: The name of the product.
-  - `catagory`: The category to which the product belongs.
-  - `price`: The price of the product.
-  - `stock`: The current stock level of the product.
-
-- **Methods**:
-  - `stock_update(quantity)`: Updates the stock by the specified quantity (positive for adding, negative for reducing).
-  - `view_product()`: Displays the product details.
-
-### InventoryManagementSystem Class
-This class acts as the main controller for the entire system, managing users, products, and transactions. Key methods include:
-  
-- **User Management**:
-  - `add_user()`: Adds a new user (Admin only).
-  - `delete_user()`: Deletes an existing user (Admin only).
-  - `change_password()`: Allows an Admin to change a user's password.
-  
-- **Product Management**:
-  - `add_product()`: Adds a new product (Admin only).
-  - `edit_product()`: Edits an existing product (Admin only).
-  - `delete_product()`: Deletes a product (Admin only).
-  - `view_inventory()`: Displays all products in the inventory.
-  - `search_product()`: Searches for products by name or category.
-  - `export_inventory_to_csv()`: Exports the inventory to a CSV file (Admin only).
-  
-- **Stock Management**:
-  - `adjust_stock()`: Allows an Admin to update stock levels.
-  - `stock_check()`: Displays products with stock below a certain threshold.
-  
-- **Sales Management**:
-  - `sale()`: Records a sale, updating stock levels accordingly.
-
-### Error Handling
-The system handles various types of exceptions such as:
-- Value errors (invalid input types)
-- Attribute errors (issues with user attributes)
-- General unexpected errors, with informative messages.
-
-### Role-Based Access
-- **Admin**: Full access to manage users, products, and inventory.
-- **User**: Limited access to view inventory and record sales.
-
-## Example of Use
-
-1. **Login as Admin**: 
-   - Enter `admin` as username and `admin123` as password.
-   - Admin has access to all functionality (adding products, managing users, etc.).
+   bash
+   python main.py
    
-2. **Login as User**:
-   - Enter `user1` as username and `user123` as password.
-   - Users can only view the inventory, search for products, and record sales.
 
-3. **Adding a Product**:
-   - Admin can add products using the `add_product()` method, entering details like ID, name, category, price, and stock.
+---
 
-4. **Selling a Product**:
-   - Users can record sales by selecting the product and entering the quantity sold. The stock will be updated automatically.
+## Usage
 
-## Troubleshooting
+1. *Login*: 
+   - Use the default credentials or create new users via the *Admin* account.
+   
+2. *Admin Options*:
+   - After logging in as Admin, you can:
+     1. Add, view, delete, and update users.
+     2. Add, edit, delete, and view products.
+     3. Adjust stock levels.
+     4. Record sales and view sales data.
+     5. Export inventory or sales data to CSV files.
 
-### Common Errors:
-- **Invalid Credentials**: Ensure that the username and password match the default or registered users.
-- **Product ID Already Exists**: Ensure that each product has a unique ID when adding products.
-- **Stock Updates**: Make sure the quantity to be adjusted does not exceed the available stock.
+3. *User Options*:
+   - After logging in as a regular user, you can:
+     1. View the inventory.
+     2. Record sales.
+     3. Search for products by name or category.
+     4. Check stock levels.
 
-## License
+---
 
-This project is open-source and can be used and modified freely. No warranty is provided, and usage is at your own risk.
+## Classes and Functions Overview
 
-## Conclusion
+### 1. *User Class*
+   Represents a system user with the following attributes:
+   - username: The user's login name.
+   - password: The user's password.
+   - role: Either Admin or User.
 
-This simple and functional Inventory Management System allows you to efficiently manage product stock and users, with a clear separation of roles for admins and regular users. It is designed for ease of use and can be expanded to accommodate additional features such as reporting or multi-user support.
+---
+
+### 2. *Product Class*
+   Represents a product in the inventory with attributes and methods:
+   - *Attributes*:
+     - product_id: A unique identifier for the product.
+     - name: The name of the product.
+     - catagory: The product's category.
+     - price: The price of the product.
+     - stock: The current stock level of the product.
+   - *Methods*:
+     - stock_update(quantity): Adjusts the stock by adding or subtracting a specified quantity.
+     - view_product(): Returns a formatted string with product details.
+
+---
+
+### 3. *InventoryManagementSystem Class*
+
+#### Key Methods:
+
+##### User Management:
+- default_user(): Creates default Admin and User accounts.
+- login(): Handles user authentication.
+- add_user(): Allows Admin to add a new user.
+- delete_user(): Allows Admin to remove a user.
+- check_users(): Displays all users (Admin only).
+- change_password(): Allows Admin to change a user's password.
+
+##### Product Management:
+- add_product(): Adds a new product to the inventory (Admin only).
+- edit_product(): Edits an existing product's details (Admin only).
+- delete_product(): Deletes a product from the inventory (Admin only).
+- view_inventory(): Displays the current inventory.
+- search_product(): Searches for products by name or category.
+
+##### Stock Management:
+- adjust_stock(): Adjusts the stock of a specific product (Admin only).
+- stock_check(): Displays products with stock below a specified threshold.
+
+##### Sales Management:
+- sale(): Records a sale, adjusts stock, and logs the transaction.
+- export_sales_to_csv(): Exports sales data to a CSV file (Admin only).
+
+##### Data Export:
+- export_inventory_to_csv(): Exports the current inventory to a CSV file (Admin only).
+
+---
+
+## Default Credentials
+
+| Username | Password | Role  |
+|----------|----------|-------|
+| admin    | admin123 | Admin |
+| user1    | user123  | User  |
+
+---
+
+## Usage Flow
+
+1. *Login*:
+   - Enter your username and password.
+   - Admins and Users will see different menu options.
+
+2. *Admin Menu*:
+   
+   1: Add User
+   2: Add Product
+   3: Edit Product
+   4: Delete Product
+   5: View Inventory
+   6: Adjust Stock
+   7: Record a Sale
+   8: Search Product
+   9: Check Stock
+   10: Check Users
+   11: Delete User
+   12: Change Password
+   13: Export Inventory
+   14: Export Sales
+   15: Logout
+   
+
+3. *User Menu*:
+   
+   1: View Inventory
+   2: Record a Sale
+   3: Search Product
+   4: Check Stock
+   5: Logout
+   
+
+---
+
+## Error Handling
+
+- The program is designed to handle common errors gracefully, such as:
+  - Invalid input (e.g., entering text where numbers are expected).
+  - Permission errors during file export.
+  - Attempts to access Admin-only features as a regular user.
+
+---
+
+## Example Workflow
+
+1. Admin logs in with admin/admin123.
+2. Admin adds a new product to the inventory.
+3. Admin adjusts stock levels or deletes a product.
+4. User logs in with user1/user123.
+5. User views the inventory and records a sale.
+6. Admin exports sales and inventory data to CSV for reporting.
+
+---
+
+## Contributing
+
+Feel free to suggest improvements or fork the repository to add new features. Always test your changes thoroughly before making pull requests.
 
 ---
