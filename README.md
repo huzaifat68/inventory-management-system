@@ -1,7 +1,3 @@
-Here is the detailed `README.md` file for your **Console-Based Inventory Management System**:
-
----
-
 # Console-Based Inventory Management System
 
 This is a **Python-based console application** designed to manage an inventory system efficiently. It includes features like user management, product management, stock updates, sales recording, and exporting data to CSV files. The application is designed to be role-based, providing **Admin** users with full control and **Standard Users** with limited access.
@@ -55,7 +51,7 @@ This is a **Python-based console application** designed to manage an inventory s
 3. Run the script using:
 
    ```bash
-   python inventory_management_system.py
+   python main.py
    ```
 
 ---
