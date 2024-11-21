@@ -47,7 +47,7 @@ This is a **Python-based console application** designed to manage an inventory s
 ## Installation
 
 1. Clone or download this repository.
-2. Ensure you have Python installed (version 3.8 or higher recommended).
+2. Ensure you have Python installed (version 3.13.0 or higher recommended).
 3. Run the script using:
 
    ```bash
