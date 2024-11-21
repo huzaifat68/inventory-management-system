@@ -6,7 +6,7 @@ username = admin, user1
 password = admin123, user123
 """
 
-import csv 
+import csv,datetime
 
 #User class for managing roles based access
 class User:
@@ -57,6 +57,7 @@ class InventoryManagementSystem:
     def __init__(self):
         self.users = []
         self.products = {}
+        self.sales = []
         self.current_user = None
         self.default_user()
 
@@ -249,16 +250,54 @@ class InventoryManagementSystem:
             if product:
                 quantity = int(input("Enter quantity to sell: "))
                 if quantity > 0 and quantity <= product.stock:
+                    sale_amount = quantity * product.price
                     product.stock_update(-quantity)
-                    print(f"\nSale completed, {quantity} units of the {product.name}, sold remaining stock {product.stock}")
+                    
+                    # Record the sale
+                    sale_record = {
+                        "Product ID": product_id,
+                        "Product Name": product.name,
+                        "Quantity Sold": quantity,
+                        "Sale Amount": sale_amount,
+                        "Timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    }
+                    self.sales.append(sale_record)
+
+                    print(f"\nSale completed: {quantity} units of {product.name} sold. Remaining stock: {product.stock}")
                 else:
-                    print(f"Error: Invalid Quanity, Current stock {product.stock}")
+                    print(f"Error: Invalid Quantity. Current stock: {product.stock}")
             else:
                 print("Error: Product not found in record")
         except ValueError:
             print("Error: Invalid input for Product ID or quantity.")
         except Exception as e:
             print(f"Unexpected error while processing sale: {e}")
+
+
+    # Method to export sales to csv
+    def export_sales_to_csv(self):
+        if self.current_user and self.current_user.role == "Admin":
+            try:
+                filename = input("Enter the filename to export sales (default: sales.csv): ") or "sales.csv"
+                
+                # Check if there are sales to export
+                if not self.sales:
+                    print("No sales data to export.")
+                    return
+
+                # Write sales data to a CSV file
+                with open(filename, mode="w", newline="") as file:
+                    writer = csv.DictWriter(file, fieldnames=self.sales[0].keys())
+                    writer.writeheader()
+                    writer.writerows(self.sales)
+                    
+                print(f"Sales data successfully exported to '{filename}'.")
+            except PermissionError:
+                print(f"Error: Permission denied. Please close the file '{filename}' if it is open and try again.")
+            except Exception as e:
+                print(f"Unexpected error while exporting sales: {e}")
+        else:
+            print("Access denied. Only admins can export sales data.")
 
 
     # Method for checking Users
@@ -382,9 +421,10 @@ if __name__ == "__main__":
                     while True:
                         if ims.current_user.role == "Admin":
                             print("\n1: Add User\n2: Add Product\n3: Edit Product\n4: Delete Product\n5: View Inventory\n6: Adjust Stock\n7: Record a Sale\
-                                \n8: Search Product\n9: Check Stock\n10: Check Users\n11: Delete User\n12: Change Password\n13: Export Inventory\n14: Logout")
+                                \n8: Search Product\n9: Check Stock\n10: Check Users\n11: Delete User\n12: Change Password\n13: Export Inventory\n14: Export Sales\
+                                  \n15: Logout\n16: Exit program")
                         else:
-                            print("\n1: View Inventory\n2: Record a Sale\n3: Search Product\n4: Check Stock\n5: Logout")
+                            print("\n1: View Inventory\n2: Record a Sale\n3: Search Product\n4: Check Stock\n5: Logout\n6: Exit program")
 
                         choice = input("Choose an option: ")
 
@@ -416,9 +456,14 @@ if __name__ == "__main__":
                             elif choice == "13":
                                 ims.export_inventory_to_csv()
                             elif choice == "14":
+                                ims.export_sales_to_csv()
+                            elif choice == "15":
                                 print("Logging out...")
                                 ims.current_user = None
                                 break
+                            elif choice == "16":
+                                exit()
+                                
                             else:
                                 print("Error: Invalid Choice. Try Again")
                        
@@ -435,6 +480,8 @@ if __name__ == "__main__":
                                 print("Logging out...")
                                 ims.current_user = None
                                 break
+                            elif choice == "6":
+                                exit()
                             else:
                                 print("Error: Invalid Choice. Try Again")
             
