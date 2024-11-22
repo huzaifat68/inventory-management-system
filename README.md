@@ -166,6 +166,7 @@ This is a **Python-based console application** designed to manage an inventory s
    13: Export Inventory
    14: Export Sales
    15: Logout
+   16: Exit program
    ```
 
 3. **User Menu**:
@@ -175,6 +176,7 @@ This is a **Python-based console application** designed to manage an inventory s
    3: Search Product
    4: Check Stock
    5: Logout
+   6: Exit program
    ```
 
 ---
