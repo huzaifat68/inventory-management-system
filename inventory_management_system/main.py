@@ -276,7 +276,7 @@ class InventoryManagementSystem:
 
     # Method to export sales to csv
     def export_sales_to_csv(self):
-        if self.current_user and self.current_user.role == "Admin":
+        if self.current_user.role == "Admin":
             try:
                 filename = input("Enter the filename to export sales (default: sales.csv): ") or "sales.csv"
                 
@@ -312,41 +312,44 @@ class InventoryManagementSystem:
                 except Exception as e:
                     print(f"Unexpected error while checking users: {e}")
             else:
-                print("Access denied. Users with the admin role can adjust product.")  
+                print("Access denied. Users with the admin role can check users.")  
 
 
 
     # Method for deleting user
     def delete_user(self):
+        
+        if self.current_user.role == "Admin":
+            try:
+                username = input("Enter username to delete user: ")
+                password = input("Enter password to delete user: ")
 
-            if self.current_user.role == "Admin":
-                try:
-                    username = input("Enter username to delete user: ")
-                    password = input("Enter password to delete user: ")
+                if username == self.current_user.username:
+                    print("Error: You cannot delete the account you are currently logged in with.")
+                    return
 
-                    user_to_del = None
-                    for user in self.users:
-                        
-                        if user.username == username and user.password == password:
-                            user_to_del = user
-                            break
+                user_to_del = None
+                for user in self.users:
+                            
+                    if user.username == username and user.password == password:
+                        user_to_del = user
+                        break
 
-                    if user_to_del:
-                        print(f"\nUser has been deleted.")
-
-                        self.users.remove(user_to_del)
-                        
-                    else:
-                        print("Error: User not found.")  
-                except Exception as e:
-                    print(f"Unexpected error while deleting user {e}")          
-            else:
-                print("Access denied. Users with the admin role can adjust product.")
+                if user_to_del:
+                    self.users.remove(user_to_del)
+                    print(f"\nUser '{username}' has been deleted successfully.")
+                            
+                else:
+                    print("Error: User not found.")  
+            except Exception as e:
+                print(f"Unexpected error while deleting user {e}")          
+        else:
+            print("Access denied. Users with the admin role can delete users.")
         
 
     # Method for changing the password (Admin only)
     def change_password(self):
-        if self.current_user and self.current_user.role == "Admin":
+        if self.current_user.role == "Admin":
             try:
                 username = input("\nEnter the username of the account to change the password: ")
                 user_to_update = None
